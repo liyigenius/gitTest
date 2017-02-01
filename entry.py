@@ -35,6 +35,30 @@ class Node(object):
             self.n2 = self.n2.calValue()
         return self.calcNode()
 
+def scanChar(expr):
+	pass
+	idx = 0
+	buf=''
+	varList =[]
+	tokenList  = []
+	for i in range(0,len(expr)):
+		cur = expr[i]
+		if cur == ' ':
+			continue
+		if cur == '+' or cur == '-' or cur == '*' or cur == '/':
+			pass
+			if buf != '':
+				varList.append(buf)
+				buf = ''
+				tokenList.append(cur)
+		else:
+			buf = buf + str(cur)
+	if buf != '':
+				varList.append(buf)
+	print varList,tokenList
+	return varList,tokenList
+
+
 def parseExpr(expr):
 	pass
 	ori,tar = expr.split('=')
@@ -65,7 +89,16 @@ def parseExpr(expr):
 		globalStr[ori] = res
 
 def parseAST(str1,globalNode,globalOP):
-    for i in str1:
+    vL , oL = scanChar(str1)
+    todo = []
+    while len(vL) > 0 or len(oL) > 0:
+    	if len(vL) > 0:
+    		v1 = vL.pop(0)
+    		todo.append(v1)
+    	if len(oL) > 0:
+    		v2 = oL.pop(0)
+    		todo.append(v2)
+    for i in todo:
     	if i in globalInt:
     		i = globalInt[i]
     		i = str(i)
@@ -97,6 +130,7 @@ def buildAST(expr):
 	globalOP.append('#')
 	globalNode = []
 	parseAST(expr,globalNode,globalOP)
+
 	rootNode = globalNode[0]
 	if type(rootNode) == type(1):
 		return rootNode
