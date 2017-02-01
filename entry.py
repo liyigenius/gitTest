@@ -35,6 +35,27 @@ class Node(object):
             self.n2 = self.n2.calValue()
         return self.calcNode()
 
+
+class StrNode(object):
+    def __init__(self,oper,n1,n2):
+        self.oper = oper
+        self.n1 = n1
+        self.n2 = n2
+    def calcNode(self):
+        if self.oper == '+':
+            return self.n1 + self.n2
+       
+   
+    def calValue(self):
+        if type(self.n1) == type('a') and type(self.n2) == type('a'):
+            return self.calcNode()
+        if type(self.n1) != type('a'):
+            self.n1 = self.n1.calValue()
+        if type(self.n2) != type('a'):
+            self.n2 = self.n2.calValue()
+        return self.calcNode()
+
+
 def scanChar(expr):
 	pass
 	idx = 0
@@ -55,7 +76,7 @@ def scanChar(expr):
 			buf = buf + str(cur)
 	if buf != '':
 				varList.append(buf)
-	print varList,tokenList
+	
 	return varList,tokenList
 
 
@@ -142,7 +163,7 @@ def buildAST(expr):
 def readSource(fName):
 	pass
 	for i in open(fName).readlines():
-		print i
+		#print i
 		i=i.replace(';','')
 		tokens = i.split()
 		if len(tokens) > 1 :
