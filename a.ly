@@ -1,9 +1,11 @@
 Int a;
 Int b;
-Int all;
-Str c;
-Str d;
+Int c;
+Int d;
+Int e;
 
 a = 1;
 b = 2;
-all = a + b;
+c = a + b;
+d = c + 1;
+e = d - c;
